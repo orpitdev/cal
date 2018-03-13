@@ -1,14 +1,32 @@
-<ion-header>
-  <ion-navbar>
-    <ion-title>
-      Ionic Blank
-    </ion-title>
-  </ion-navbar>
-</ion-header>
+<ion-content>
+	<h1 class="title">Próximos jogos</h1>
+	
+	<hr>
 
-<ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+	<ion-grid no-padding>
+		<ion-row no-padding>
+			<ion-col>
+				<calendar qty="5"></calendar>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<br>
+
+	<ion-grid no-padding margin-top>
+		<ion-row no-padding>
+			<ion-col>
+				<news margin-top></news>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	<ion-grid margin-top>
+		<ion-row>
+			<ion-col text-center>
+				<button class="btn-cal">Todas as notícias</button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
 </ion-content>

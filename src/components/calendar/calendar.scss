@@ -1,0 +1,93 @@
+calendar {
+    .games{
+        font-size: 18px;
+        .swiper-container-horizontal {
+            &> .swiper-pagination-bullets{
+                bottom: -25px;
+            }
+            .swiper-pagination-bullet-active{
+                background: color($colors, danger)
+            }
+        }
+
+        .title{
+            font-size: 1em;
+        }
+        .championship{
+            background-color: color($colors, primary);
+            font-size: 0.4em;
+            color: #fff;
+            text-transform: uppercase;
+            padding: 3px 5px;   
+            border-radius: 50px;
+            white-space: nowrap;
+            display: block;
+        }
+    }
+
+
+    .game-day{
+        .date{
+            span{
+                display: block;
+                width: 100%;
+                text-align: center;
+                text-transform: uppercase;
+                color: color($colors, primary);
+                font-size: 1.3em;
+                font-weight: 800;
+                line-height: 28px;
+                &.day{
+                    color: color($colors, danger);
+                    font-weight: 900;
+                    font-size: 2em;
+                }        
+            }
+        }
+        .clubs{
+    
+            &.first::after{
+                content: 'X';
+                position: absolute;
+                top: 30%;
+                right: -5px;
+                color: darken(color($colors, grey), 20%);
+            }
+            &.first{
+                border-left: 1px solid color($colors, gray)
+            }
+            &.last{
+                border-right: 1px solid color($colors, gray)
+            }
+            
+            text-transform: uppercase;
+            text-align: center;
+            color: color($colors, primary);
+            font-size: 1em;
+            font-weight: 700;
+            
+            img{
+                max-width: 60%;
+                max-height: 60%;
+                display: inline-block;
+            }   
+    
+            span{
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+        }
+    
+        .locale{
+            font-weight: 400;
+            font-size: .6em;
+            text-align: left;
+    
+            b{
+                display: block;
+                font-size: 1em !important;
+            }
+        }
+    }
+}

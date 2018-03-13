@@ -14,3 +14,85 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+//Set default font
+ion-app.md, ion-app.ios, ion-app.wp{
+    font-family: 'Open Sans', sans-serif !important;
+}
+
+//Tabs
+.tabs-md
+{
+    .tabbar{
+        top: 0;
+        min-height: 70px;
+        bottom: initial !important;
+        background-image: url('./../assets/imgs/detail_menu.png');
+        background-position: bottom center;
+        background-repeat: repeat-x;
+        background-size: cover;
+        background-color: transparent;
+        
+        &.show-tabbar
+        {
+            overflow-x: auto;
+        }
+        .tab-button{
+            min-width: 150px;
+            -webkit-align-self: baseline;
+            align-self: baseline;
+        }
+    }
+
+    .tab-button-text{
+        text-transform: uppercase;
+        color: color($colors, grey);
+        font-weight: 600;
+        font-size: 1.2em;
+    }
+
+    .tab-button[aria-selected=true]{
+        .tab-button-text{
+            color: #fff;
+        }
+    }
+
+    .scroll-content{
+        margin-top: 58px !important;
+    }
+}
+
+//Detail below of menu
+.detail_menu{
+    position: absolute;
+    z-index: 999;
+    top: 55px;
+    max-width: 100%;
+}
+
+// Helpers
+h1.title{
+    font-size: 1.4em;
+    font-weight: 800;
+    text-align: center;
+    text-transform: uppercase;
+    @extend %gradient-text;
+}
+
+.fixed-content, .scroll-content{
+    margin-bottom: 0 !important;
+    
+}
+.btn-cal{
+    @extend %gradient-background;
+    padding: 5px 30px 5px 30px;
+    color: #fff;
+    font-weight: 800;
+    font-size: 1.1em;
+    border-radius: 50px;
+    text-transform: uppercase;
+
+    &:hover, &:active{
+        background: color($colors, danger);
+    }
+}
