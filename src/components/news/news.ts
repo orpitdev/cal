@@ -1,4 +1,6 @@
-import { Component, Input } from '@angular/core';
+import { NewsProvider } from './../../providers/news/news';
+import { Component } from '@angular/core';
+import { Observable } from "rxjs/Rx"
 
 /**
  * Generated class for the NewsComponent component.
@@ -12,14 +14,29 @@ import { Component, Input } from '@angular/core';
 })
 export class NewsComponent {
 
-  @Input() qtySlider: number = 3
-  @Input() qtyBody: number = 2
+  public news_slider: any[] = []
+  public news_body: any[] = []
 
-  constructor() {
-  }
+  constructor(private newsProvider: NewsProvider) {}
 
   ngOnInit(){ //ionDidLoadView e CIA não funciona nos components, só em pages. Então se recorre ao lifecicle do Angular.
+    this.proccess();
+  }
+  
+  public proccess(){
+
+    console.log('processo')
     
-	}
+      var newsData = this.newsProvider.get()
+      .then((data: any[]) => {
+        setTimeout(() => {
+          this.news_slider = data[0]; //Slider
+          this.news_body = data[1]; //Body
+        }, 20000)
+      })
+      .catch(() => {
+        console.log('fail');
+      })    
+  }
 
 }

@@ -96,3 +96,30 @@ h1.title{
         background: color($colors, danger);
     }
 }
+
+//Toast
+.toast-md.danger{
+    .toast-wrapper{
+        background-color: #de3241;
+    }
+}
+.toast-md.success{
+    .toast-wrapper{
+        background-color: #1da83f;
+    }
+}
+.toast-md.warning{
+    .toast-wrapper{
+        background-color: #ffc200;
+    }
+}
+.toast-md.primary{
+    .toast-wrapper{
+        background-color: #0077ff;
+    }
+}
+.toast-md.info{
+    .toast-wrapper{
+        background-color: #00a2ba;
+    }
+}

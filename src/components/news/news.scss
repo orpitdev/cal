@@ -43,5 +43,8 @@ news {
                 @extend %gradient-text;
             }
         }
+        &>ion-row{
+            margin-bottom: 5px;
+        }
     }
 }
