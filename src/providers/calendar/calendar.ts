@@ -31,6 +31,15 @@ export class CalendarProvider {
         this.http.get(this.API + '/games/' + page)
         .toPromise()
         .then((result: any) => {
+          if(window.localStorage.getItem('forceUpdate') == '1'){
+            this.db
+                .then((db: SQLiteObject) => {
+                  db.executeSql("DELETE FROM calendar", {})
+                })
+          }
+          return result;
+        })
+        .then((result: any) => {
 
           var cont = 1;
           for(let i in result)

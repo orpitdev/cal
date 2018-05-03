@@ -36,11 +36,13 @@ import { CalendarProvider } from '../providers/calendar/calendar';
 import { PlayersProvider } from '../providers/players/players';
 import { ResultProvider } from '../providers/result/result';
 import { DivisionProvider } from '../providers/division/division';
+import { CategoryclubProvider } from '../providers/categoryclub/categoryclub';
 
 
 import localePt from '@angular/common/locales/pt';
-import { CategoryclubProvider } from '../providers/categoryclub/categoryclub';
+import { AliveProvider } from '../providers/alive/alive';
 registerLocaleData(localePt, 'pt');
+
 
 @NgModule({
     declarations: [
@@ -97,6 +99,7 @@ registerLocaleData(localePt, 'pt');
         ResultProvider,
         PlayersProvider,
     CategoryclubProvider,
+    AliveProvider,
     ]
 })
 export class AppModule {}

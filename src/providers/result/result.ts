@@ -14,7 +14,7 @@ import { ToastProvider } from './../toast/toast';
 @Injectable()
 export class ResultProvider {
 
-  private db: any
+  public db: any
   private API: string = 'http://calinense.com.br/api/v1'
   private source_path: string = 'http://calinense.com.br/public/cms/upload/club/'
   private sector: string = 'clubs'
@@ -30,6 +30,15 @@ export class ResultProvider {
       {
         this.http.get(this.API + '/result')
         .toPromise()
+        .then((result: any) => {
+          if(window.localStorage.getItem('forceUpdate') == '1'){
+            this.db
+                .then((db: SQLiteObject) => {
+                  db.executeSql("DELETE FROM results", {})
+                })
+          }
+          return result;
+        })
         .then((result: any) => {
 
           var cont = 1;

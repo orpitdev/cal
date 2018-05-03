@@ -1,3 +1,9 @@
+import { AliveProvider } from './../../providers/alive/alive';
+import { ToastProvider } from './../../providers/toast/toast';
+import { PlayersProvider } from './../../providers/players/players';
+import { CategoryclubProvider } from './../../providers/categoryclub/categoryclub';
+import { ResultProvider } from './../../providers/result/result';
+import { DivisionProvider } from './../../providers/division/division';
 import { DatabaseProvider } from './../../providers/database/database';
 import { NewsProvider } from './../../providers/news/news';
 import { CalendarProvider } from './../../providers/calendar/calendar';
@@ -21,12 +27,23 @@ export class HomePage {
 
 	@ViewChild('myTabs') tabs: Tabs;
 
-	constructor(public navCtrl: NavController, public newsProvider: NewsProvider, public calendarProvider: CalendarProvider, public dbProvider: DatabaseProvider) {		    
-	}
+	constructor(
+		public navCtrl: NavController, 
+		public dbProvider: DatabaseProvider,
+		public newsProvider: NewsProvider, 
+		public calendarProvider: CalendarProvider,
+		public divisionProvider: DivisionProvider,
+		public resultProvider: ResultProvider,
+		public categoryClubProvider: CategoryclubProvider,
+		public playersProvider: PlayersProvider,
+		public aliveProvider: AliveProvider,
+		public toast: ToastProvider
+	) {}
 
 	ionViewDidLoad(){
 		this.getNews();
 		this.getCalendar();
+		this.checkAlive();
 	}
 
 	getNews(){
@@ -89,11 +106,49 @@ export class HomePage {
 	doUpdate(update)
 	{
 		this.update = update;
-		
-		this.dbProvider.addRefresh('news')
-		this.getNews();
 
-		this.dbProvider.addRefresh('calendar')
-		this.getCalendar();
+		window.localStorage.setItem('forceUpdate', '1')
+
+		Promise.all([
+			this.newsProvider.populate(),
+			this.calendarProvider.populate(),
+			this.divisionProvider.populate(),
+			this.resultProvider.populate(),
+			this.categoryClubProvider.populate(),
+			this.playersProvider.populate()
+		])
+		.then(() => {
+			this.toast.call('success', 'Suas informações foram atualizadas!')
+			window.localStorage.removeItem('forceUpdate')
+			this.getCalendar();
+			this.getNews();
+		})
+	}
+
+	checkAlive()
+	{
+		let loop: any;
+
+		if(window.localStorage.getItem('network_status') == '1')
+		{
+			loop = setInterval(() => {
+				this.aliveProvider.check()
+				.then((data: any) => {
+					if(data)
+					{
+						if(data.hasgame == '1')
+						{
+							console.log('oi');
+						}
+					}
+				})
+			}, 5000)
+		}
+		else
+		{
+			if(loop){
+				clearInterval(loop)
+			}
+		}
 	}
 }

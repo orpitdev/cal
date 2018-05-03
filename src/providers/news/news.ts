@@ -31,6 +31,15 @@ export class NewsProvider {
         this.http.get(this.API + '/news/' + page)
         .toPromise()
         .then((result: any) => {
+          if(window.localStorage.getItem('forceUpdate') == '1'){
+            this.db
+                .then((db: SQLiteObject) => {
+                  db.executeSql("DELETE FROM news", {})
+                })
+          }
+          return result;
+        })
+        .then((result: any) => {
 
           var cont = 1;
           
