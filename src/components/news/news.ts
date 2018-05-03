@@ -1,7 +1,6 @@
-import { NewsProvider } from './../../providers/news/news';
-import { Component } from '@angular/core';
-import { Observable } from "rxjs/Rx"
-
+import { NewsDetailPage } from './../../pages/news-detail/news-detail';
+import { NavController } from 'ionic-angular';
+import { Component, Input } from '@angular/core';
 /**
  * Generated class for the NewsComponent component.
  *
@@ -14,29 +13,13 @@ import { Observable } from "rxjs/Rx"
 })
 export class NewsComponent {
 
-  public news_slider: any[] = []
-  public news_body: any[] = []
+  @Input() public newsSlider: any[] = []
+  @Input() public newsBody: any[] = []
 
-  constructor(private newsProvider: NewsProvider) {}
+  constructor(public navCtrl: NavController) {}
 
-  ngOnInit(){ //ionDidLoadView e CIA não funciona nos components, só em pages. Então se recorre ao lifecicle do Angular.
-    this.proccess();
-  }
-  
-  public proccess(){
-
-    console.log('processo')
-    
-      var newsData = this.newsProvider.get()
-      .then((data: any[]) => {
-        setTimeout(() => {
-          this.news_slider = data[0]; //Slider
-          this.news_body = data[1]; //Body
-        }, 20000)
-      })
-      .catch(() => {
-        console.log('fail');
-      })    
+  goToDetail(id){
+    this.navCtrl.push(NewsDetailPage, {id})
   }
 
 }

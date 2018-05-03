@@ -1,4 +1,4 @@
-import { SQLiteObject } from '@ionic-native/sqlite';
+import { PlayersProvider } from './../providers/players/players';
 import { Component } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -10,7 +10,10 @@ import { TabsPage } from '../pages/tabs/tabs';
 import { DatabaseProvider } from './../providers/database/database';
 import { ToastProvider } from './../providers/toast/toast';
 import { NewsProvider } from './../providers/news/news';
-import { NewsComponent } from '../components/news/news';
+import { CalendarProvider } from './../providers/calendar/calendar';
+import { CategoryclubProvider } from './../providers/categoryclub/categoryclub';
+import { ResultProvider } from './../providers/result/result';
+import { DivisionProvider } from './../providers/division/division';
 
 @Component({
   templateUrl: 'app.html'
@@ -26,7 +29,11 @@ export class MyApp {
     public dbProvider: DatabaseProvider, 
     public toastProvider: ToastProvider,
     public newsProvider: NewsProvider,
-    public newsComponent: NewsComponent,
+    public calendarProvider: CalendarProvider,
+    public divisionProvider: DivisionProvider,
+    public resultProvider: ResultProvider,
+    public categoryClubProvider: CategoryclubProvider,
+    public playersProvider: PlayersProvider,
     public network: Network,
   ) {
     platform.ready().then(() => {
@@ -42,7 +49,6 @@ export class MyApp {
       })
       .then(() => {
         //Havendo sucesso, inicia a checagem de mudanças no BD e vai pra home.
-        this.checkChanges();
         this.openHomePage(splashScreen);
       })
       .catch(() => {
@@ -73,33 +79,11 @@ export class MyApp {
 
   private populate(){
     this.newsProvider.populate();
-  }
-
-  private checkChanges(){
-    setInterval(() => {
-      this.dbProvider.getDB()
-      .then((db: SQLiteObject) => {
-        let sql = "SELECT * FROM changes";
-        return db.executeSql(sql, [])
-      })
-      .then((changes) => {
-        if(changes.rows.length > 0)
-        {
-          for(var i = 0; i < changes.rows.length; i++)
-          {
-            let change = changes.rows.item(i)
-            if(change.locale == "news")
-            {
-              // this.newsComponent
-              // .proccess()
-              // .then(() => {
-              //   this.dbProvider.removeChange('news')
-              // })
-            }
-          }
-        }
-      })
-    }, 5000)
+    this.calendarProvider.populate();
+    this.divisionProvider.populate();
+    this.resultProvider.populate();
+    this.categoryClubProvider.populate();
+    this.playersProvider.populate();
   }
 }
 

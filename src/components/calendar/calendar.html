@@ -11,33 +11,33 @@
 						<hr>
 					</ion-col>
 				</ion-row>
-				<div no-padding *ngFor="let game of data">
+				<div no-padding *ngFor="let game of calendarBody">
 					<ion-row class="game-day">
 						<ion-col class="date">
-							<span class="week">{{game.week}}</span>
-							<span class="day">{{game.day}}</span>
-							<span class="month">{{game.month}}</span>
+							<span class="week">{{game.day_week}}</span>
+							<span class="day">{{game.date_game | date:'dd'}}</span>
+							<span class="month">{{game.month_name}}</span>
 						</ion-col>
 						<ion-col col-6>
 							<ion-row>
 								<ion-col class="clubs first">
-									<img src="{{game.club[0].image}}" alt="">
-									<span>{{game.club[0].tag}}</span>
+									<img-loader src="{{game.team_t1_logo}}" useImg></img-loader>
+									<span>{{game.team_t1_initials}}</span>
 								</ion-col>
 								<ion-col class="clubs last">
-									<img src="{{game.club[1].image}}" alt="">
-									<span>{{game.club[1].tag}}</span>
+									<img-loader src="{{game.team_t2_logo}}" useImg></img-loader>
+									<span>{{game.team_t2_initials}}</span>
 								</ion-col>
 							</ion-row>
 							<ion-row text-center no-padding>
 								<ion-col no-padding>
-									<span class="championship">{{game.championship}}</span>
+									<span class="championship">{{game.championships}}</span>
 								</ion-col>
 							</ion-row>
 						</ion-col>
 						<ion-col class="locale">
-							<b>{{game.hour}}</b>
-							{{game.locale}}
+							<b>{{game.time_simple}}</b>
+							{{game.stadium_name}}
 						</ion-col>
 					</ion-row>
 					<ion-row><ion-col><hr></ion-col></ion-row>
@@ -50,33 +50,33 @@
 			<ion-grid>
 				<ion-row>
 					<ion-slides pager="true" effect="flip" class="games">
-						<ion-slide *ngFor="let game of data">
+						<ion-slide *ngFor="let game of calendarSlider">
 							<ion-row class="game-day">
 								<ion-col class="date">
-									<span class="week">{{game.week}}</span>
-									<span class="day">{{game.day}}</span>
-									<span class="month">{{game.month}}</span>
+									<span class="week">{{game.day_week}}</span>
+									<span class="day">{{game.date_game | date:'dd'}}</span>
+									<span class="month">{{game.month_name}}</span>
 								</ion-col>
 								<ion-col col-6>
 									<ion-row>
 										<ion-col class="clubs first">
-											<img src="{{game.club[0].image}}" alt="">
-											<span>{{game.club[0].tag}}</span>
+											<img-loader src="{{game.team_t1_logo}}" useImg></img-loader>
+											<span>{{game.team_t1_initials}}</span>
 										</ion-col>
 										<ion-col class="clubs last">
-											<img src="{{game.club[1].image}}" alt="">
-											<span>{{game.club[1].tag}}</span>
+											<img-loader src="{{game.team_t2_logo}}" useImg></img-loader>
+											<span>{{game.team_t2_initials}}</span>
 										</ion-col>
 									</ion-row>
 									<ion-row text-center no-padding>
 										<ion-col no-padding>
-											<span class="championship">{{game.championship}}</span>
+											<span class="championship">{{game.championships}}</span>
 										</ion-col>
 									</ion-row>
 								</ion-col>
 								<ion-col class="locale">
-									<b>{{game.hour}}</b>
-									{{game.locale}}
+									<b>{{game.time_simple}}</b>
+									{{game.stadium_name}}
 								</ion-col>
 							</ion-row>
 						</ion-slide>

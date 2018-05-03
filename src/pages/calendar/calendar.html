@@ -6,5 +6,9 @@
 -->
 
 <ion-content no-padding>
-  <calendar raw="true"></calendar>
+  <ion-spinner *ngIf="loading" margin-top></ion-spinner>
+  <nodata *ngIf="(calendar_body == undefined || calendar_body.length == 0) && !loading"></nodata>
+  <calendar raw="true" [calendarBody]="calendar_body"></calendar>
+  <ion-spinner *ngIf="loading_more" margin-top></ion-spinner>
+  <button margin-bottom ion-button full color="danger" (click)="moreCalendar()">VER MAIS</button>
 </ion-content>

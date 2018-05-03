@@ -6,43 +6,57 @@
 -->
 
 <ion-content>
+
+  <ion-spinner *ngIf="loading" margin-top></ion-spinner>
+  <nodata *ngIf="(categories == undefined || categories.length == 0) && !loading"></nodata>
+
   <ion-grid no-padding>
-    <ion-row class="top"></ion-row>
+      <ion-row>
+        <ion-col *ngIf="(categories != undefined && categories.length != 0) && !loading" margin-top>
+          <ion-item>
+            <ion-label>Escolha uma categoria</ion-label>
+            <ion-select [(ngModel)]="category_id" okText="Ok" cancelText="Cancelar" (ionChange)="loadPlayers($event)">
+              <ion-option *ngFor="let category of categories" [value]="category.id_category_club">{{category.description}}</ion-option>
+            </ion-select>
+          </ion-item>
+  
+        </ion-col>
+      </ion-row>
+    
+    
+    
+      <ion-row *ngIf="!category_id && !loading">
+        <ion-col text-center margin-top>
+          <h2><ion-icon name="arrow-up"></ion-icon></h2>
+          Escolha uma categoria para ver o elenco
+        </ion-col>
+      </ion-row>
+  
+  
+      <ion-spinner *ngIf="loading_players" margin-top></ion-spinner>
 
-    <ion-row padding>
-      <ion-col class="photo" style="background-image: url('./assets/imgs/player_sample.png')"></ion-col>
+      <ion-row>
+        <ion-col text-center *ngIf="nodata" margin-top>
+          <small>
+            <b>Ops! Nenhum registro encontrado <ion-icon name="sad"></ion-icon></b>
+            <br>
+            Tente outra categoria.
+          </small>
+        </ion-col>
+      </ion-row>
+
+    <ion-row padding *ngFor="let player of players">
+      <ion-col class="photo" [ngStyle]="{'background-image': 'url('+player.picture+')'}"></ion-col>
       <ion-col class="desc">
         <ion-row>
           <ion-col padding>
-              <b>Igor, 22</b>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor dunt tempor tempor.
+              <b>{{player.name}}<span *ngIf="player.age > 0">, {{player.age}}</span></b>
+              {{player.position}}
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
 
-    <ion-row padding>
-      <ion-col class="photo" style="background-image: url('./assets/imgs/player_sample_2.png')"></ion-col>
-      <ion-col class="desc">
-        <ion-row>
-          <ion-col padding>
-              <b>Pegorari, 23</b>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor dunt tempor tempor.
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
-
-    <ion-row padding>
-      <ion-col class="photo" style="background-image: url('./assets/imgs/player_sample_3.png')"></ion-col>
-      <ion-col class="desc">
-        <ion-row>
-          <ion-col padding>
-              <b>Vitor Golas, 24</b>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor dunt tempor tempor.
-          </ion-col>
-        </ion-row>
-      </ion-col>
-    </ion-row>
+    
   </ion-grid>
 </ion-content>

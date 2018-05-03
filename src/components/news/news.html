@@ -1,16 +1,10 @@
 <!-- Generated template for the NewsComponent component -->
 <div>
-	{{test}}
-	aaa{{news_slider}}bbb
-	<hr>
-	<span *ngFor="let t of test">{{t.name}}</span>
-	<hr>
-
-  	<ion-grid no-padding>
+	<ion-grid no-padding>
 		<ion-row>
 			<ion-col>
 				<ion-slides pager="true" effect="slide" class="slide-news">
-					<ion-slide *ngFor="let slider of news_slider">
+					<ion-slide *ngFor="let slider of newsSlider" (click)="goToDetail(slider.id)">
 						<ion-row class="news-destac" [ngStyle]="{'background-image': 'url('+slider.image+')'}">
 							<div class="backlight"></div>
 							<ion-col align-self-center>
@@ -26,8 +20,10 @@
 		</ion-row>
 		<ion-row padding>
 			<ion-col class="news-more">
-				<ion-row *ngFor="let body of news_body">
-					<ion-col col-4 class="pic" [ngStyle]="{'background-image': 'url('+body.image+')'}"></ion-col>
+				<ion-row *ngFor="let body of newsBody" (click)="goToDetail(body.id)">
+					<ion-col col-4 class="pic">
+						<img-loader src="{{body.image}}"></img-loader>
+					</ion-col>
 					<ion-col col-8 class="content">
 						<span class="title">{{body.title}}</span>
 						<actions id="" color="#b1000b" float-left margin-top></actions>

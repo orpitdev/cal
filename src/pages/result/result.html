@@ -1,0 +1,84 @@
+<!--
+  Generated template for the ResultPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-content>
+
+  <ion-spinner *ngIf="loading" margin-top></ion-spinner>
+  <nodata *ngIf="(divisions == undefined || divisions.length == 0) && !loading"></nodata>
+
+  <ion-grid no-padding>
+
+
+    <ion-row>
+      <ion-col *ngIf="(divisions != undefined && divisions.length != 0) && !loading" margin-top>
+        <ion-item>
+          <ion-label>Escolha uma divisão</ion-label>
+          <ion-select [(ngModel)]="divisions_id" okText="Ok" cancelText="Cancelar" (ionChange)="loadResults($event)">
+            <ion-option *ngFor="let division of divisions" [value]="division.id_divisions">{{division.description}}</ion-option>
+          </ion-select>
+        </ion-item>
+
+      </ion-col>
+    </ion-row>
+
+
+
+    <ion-row *ngIf="!divisions_id && !loading">
+      <ion-col text-center margin-top>
+        <h2><ion-icon name="arrow-up"></ion-icon></h2>
+        Escolha uma divisão para ver os resultados
+      </ion-col>
+    </ion-row>
+
+
+    <ion-spinner *ngIf="loading_result" margin-top></ion-spinner>
+    
+    <ion-col text-center *ngIf="nodata" margin-top>
+      <small>
+        <b>Ops! Nenhum registro encontrado <ion-icon name="sad"></ion-icon></b>
+        <br>
+        Tente outra divisão.
+      </small>
+    </ion-col>
+
+    <div no-padding *ngFor="let game of results" class="games">
+      <ion-row class="game-day">
+        <ion-col class="date">
+          <span class="week">{{game.day_week}}</span>
+          <span class="day">{{game.date_game | date:'dd'}}</span>
+          <span class="month">{{game.month_name}}</span>
+        </ion-col>
+        <ion-col col-6>
+          <ion-row>
+            <ion-col class="clubs first">
+              <span class="color-grey">{{game.team_t1_initials}}</span>
+              <img-loader src="{{game.team_t1_logo}}" useImg></img-loader>
+              <span>{{game.goal_t1}}</span>
+            </ion-col>
+            <ion-col class="clubs last">
+              <span class="color-grey">{{game.team_t2_initials}}</span>
+              <img-loader src="{{game.team_t2_logo}}" useImg></img-loader>
+              <span>{{game.goal_t2}}</span>
+            </ion-col>
+          </ion-row>
+          <ion-row text-center no-padding>
+            <ion-col no-padding>
+              <span class="championship">{{game.championships}}</span>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+        <ion-col class="locale">
+          <b>{{game.time_simple}}</b>
+          {{game.stadium_name}}
+        </ion-col>
+      </ion-row>
+      <ion-row><ion-col><hr></ion-col></ion-row>
+    </div>
+
+
+
+  </ion-grid>
+</ion-content>

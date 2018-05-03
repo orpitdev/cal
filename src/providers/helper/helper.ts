@@ -13,6 +13,7 @@ import { File } from '@ionic-native/file';
 export class HelperProvider {
 
   private fileTransfer: FileTransferObject = this.transfer.create();
+  private no_image = 'http://calinense.com.br/api/public/no_img.jpg';
 
   constructor(public transfer: FileTransfer, public file: File) { }
 
@@ -24,14 +25,26 @@ export class HelperProvider {
           //Retorna o path do local da imagem
           resolve(entry.nativeURL);
         }, () => {
-          //Se houver erro, retorna "resolvida", mas retorna "false" para o download
-          resolve(false);
+          //Se houver erro, retorna "resolvida", mas retorna "no_image" para o download
+          this.fileTransfer.download(this.no_image, this.file.dataDirectory + sector + '/' + 'no_img.jpg')
+          .then((entry) => {
+            //Retorna o path do local da imagem
+            resolve(entry.nativeURL);
+          }, () => {
+            resolve(false);
+          })
         });
       }
       else
       {
-        //Se o "file_name" vier vazio, retorna "false" para o download
-        resolve(false);
+        //Se o "file_name" vier vazio, retorna "no image" para o download
+        this.fileTransfer.download(this.no_image, this.file.dataDirectory + sector + '/' + 'no_img.jpg')
+          .then((entry) => {
+            //Retorna o path do local da imagem
+            resolve(entry.nativeURL);
+          }, () => {
+            resolve(false);
+          })
       }
     })
   }

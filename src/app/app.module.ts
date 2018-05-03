@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule, LOCALE_ID } from '@angular/core';
+import { registerLocaleData } from '@angular/common';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -7,54 +8,73 @@ import { ScreenOrientation } from '@ionic-native/screen-orientation';
 import { HttpClientModule } from '@angular/common/http';
 import { FileTransfer } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
-
+import { IonicImageLoader } from 'ionic-image-loader';
+import { Network } from '@ionic-native/network';
 import { SQLite } from '@ionic-native/sqlite';
-import { DatabaseProvider } from '../providers/database/database';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
+import { HomePage } from '../pages/home/home';
 import { CalendarPage } from '../pages/calendar/calendar';
+import { ResultPage } from './../pages/result/result';
 import { NewsPage } from '../pages/news/news';
+import { NewsDetailPage } from './../pages/news-detail/news-detail';
 import { PlayersPage } from './../pages/players/players';
-
+import { AboutPage } from './../pages/about/about';
 
 import { ActionsComponent } from './../components/actions/actions';
 import { NewsComponent } from './../components/news/news';
 import { CalendarComponent } from './../components/calendar/calendar';
+import { NodataComponent } from './../components/nodata/nodata';
+
+
+import { DatabaseProvider } from '../providers/database/database';
 import { NewsProvider } from '../providers/news/news';
 import { ToastProvider } from '../providers/toast/toast';
-import { Network } from '@ionic-native/network';
-
-import 'rxjs/add/operator/timeout';
-import 'rxjs/add/operator/retry';
 import { HelperProvider } from '../providers/helper/helper';
+import { CalendarProvider } from '../providers/calendar/calendar';
+import { PlayersProvider } from '../providers/players/players';
+import { ResultProvider } from '../providers/result/result';
+import { DivisionProvider } from '../providers/division/division';
+
+
+import localePt from '@angular/common/locales/pt';
+import { CategoryclubProvider } from '../providers/categoryclub/categoryclub';
+registerLocaleData(localePt, 'pt');
 
 @NgModule({
     declarations: [
         MyApp,
-        HomePage,
         TabsPage,
+        HomePage,
         CalendarPage,
+        ResultPage,
         NewsPage,
+        NewsDetailPage,
+        PlayersPage,
+        AboutPage,
         NewsComponent,
-        PlayersPage,    
         ActionsComponent,
-        CalendarComponent
+        CalendarComponent,
+        NodataComponent
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp),
+        IonicImageLoader.forRoot(),
         HttpClientModule,
     ],
     bootstrap: [IonicApp],
     entryComponents: [
         MyApp,
-        HomePage,
         TabsPage,
+        HomePage,
         CalendarPage,
+        ResultPage,
         NewsPage,
-        PlayersPage
+        NewsDetailPage,
+        PlayersPage,
+        AboutPage
     ],
     providers: [
         StatusBar,
@@ -63,14 +83,20 @@ import { HelperProvider } from '../providers/helper/helper';
         SQLite,
         DatabaseProvider,
         NewsProvider,
-        NewsComponent,
+        HelperProvider,
         ToastProvider,
         Network,
         FileTransfer,
+        CalendarComponent,
         File,
         {provide: ErrorHandler, useClass: IonicErrorHandler},
-        {provide: LOCALE_ID, useValue: 'pt-BR'},
-    HelperProvider
+        {provide: LOCALE_ID, useValue: 'pt'},
+        CalendarProvider,
+        DivisionProvider,
+        ResultProvider,
+        ResultProvider,
+        PlayersProvider,
+    CategoryclubProvider,
     ]
 })
 export class AppModule {}

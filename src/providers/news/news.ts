@@ -18,19 +18,22 @@ export class NewsProvider {
   private API: string = 'http://calinense.com.br/api/v1'
   private source_path: string = 'http://calinense.com.br/public/cms/upload/content/'
   private sector: string = 'news'
-  private page: number = 1
   
   constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {
     this.db = this.dbProvider.getDB();
   }
 
-  public populate(){
+  public populate(page: number = 0){
     
     return new Promise((resolve, reject) => {
       if(window.localStorage.getItem('network_status') == '1')
       {
-        this.http.get(this.API + '/news/' + this.page)
-        .subscribe((result: any) => {
+        this.http.get(this.API + '/news/' + page)
+        .toPromise()
+        .then((result: any) => {
+
+          var cont = 1;
+          
           for(let i in result)
           {
             this.helperProvider
@@ -53,28 +56,42 @@ export class NewsProvider {
                 
               })
               .then(() => {
-								this.dbProvider.hasChange('news');
-								console.log('Notícia inserida com sucesso. ID: ', result[i].cntnt_id)
+                console.log('Notícia inserida com sucesso. ID: ', result[i].cntnt_id)
               })
               .catch((error) => {
                 console.error('Não foi possível inserir a notícia (Id: '+result[i].cntnt_id+'). Retorno: ', error.message)
               })
+              .then(() => {
+                if(cont >= result.length)
+                {
+                  this.dbProvider.addRefresh('news');
+                }
+                cont++;
+              })
           }
-          resolve(true);     
-        }, (error) => {
-          this.toastProvider.call('danger', 'Não foi possível atualizar as notícias.');
-          reject(false)
+
+          //Caso result não retorne dados, adiciona um ultimo refresh para matar o processo de looping.
+          if(Object.keys(result).length == 0)
+          {
+            this.dbProvider.addRefresh('news');
+            this.toastProvider.call('success', 'Você já resgatou todos os registros :)');
+          }
         })
+        .catch((error) => {
+          this.toastProvider.call('danger', 'Não foi possível atualizar as notícias.');
+          reject();
+        })
+        .then(() => resolve())
       }
     })
   }
 
-  public get(page: number = 0, per_page: number = 10){
+  public get(page: number = 1){
     return this.db
     .then((db: SQLiteObject) => {
 
-      let sql = "SELECT * FROM news ORDER BY id_source DESC LIMIT ? OFFSET ?"
-      let params = [per_page, (page*per_page)]
+      let sql = "SELECT * FROM news ORDER BY date(date_time) DESC LIMIT ?"
+      let params = [(page*10)]
 
 			return db.executeSql(sql, params)
 			
@@ -86,18 +103,46 @@ export class NewsProvider {
 				let news_body: any[] = [];
 				
 				//News do slider
-        for (var i = 0; i < 3; i++) {
+        for (var i = 0; i < 5; i++) {
           let item = data.rows.item(i);
+
+          if(item)
           news_slider.push(item);
 				}
 				
 				//News do body
         for (var j = 3; j < data.rows.length; j++) {
           let item = data.rows.item(j);
+          
+          if(item)
           news_body.push(item);
 				}
 				
 				return [news_slider, news_body];
+				
+      } else {
+        return [];
+      }
+		})
+		.catch((e) => console.error(e));
+  }
+
+
+  public detail(id){
+    return this.db
+    .then((db: SQLiteObject) => {
+
+      let sql = "SELECT * FROM news WHERE id = ? LIMIT 1"
+      let params = [id]
+
+			return db.executeSql(sql, params)
+			
+    })
+    .then((data: any) => {
+      if (data.rows.length > 0) {
+
+				let news = data.rows.item(0);
+				return news;
 				
       } else {
         return [];

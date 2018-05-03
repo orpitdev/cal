@@ -6,5 +6,12 @@
 -->
 
 <ion-content no-padding>
-    <news qtySlider="4" qtyBody="6"></news>
+    <ion-spinner *ngIf="loading" margin-top></ion-spinner>
+
+    <nodata *ngIf="(news_slider == undefined || news_slider.length == 0) && (news_body == undefined || news_body.length == 0) && !loading"></nodata>
+    <news [newsSlider]="news_slider" [newsBody]="news_body" margin-top></news>
+
+    <ion-spinner *ngIf="loading_more" margin-top></ion-spinner>
+
+    <button margin-bottom ion-button color="danger" full (click)="moreNews()">VER MAIS</button>
 </ion-content>

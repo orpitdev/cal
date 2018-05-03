@@ -1,4 +1,9 @@
 <ion-content>
+
+	<ion-refresher (ionRefresh)="doUpdate($event)">
+		<ion-refresher-content pullingIcon="refresh-circle" refreshingSpinner="crescent"></ion-refresher-content>
+	</ion-refresher>
+			
 	<h1 class="title">Próximos jogos</h1>
 	
 	<hr>
@@ -6,7 +11,9 @@
 	<ion-grid no-padding>
 		<ion-row no-padding>
 			<ion-col>
-				<calendar qty="5"></calendar>
+				<ion-spinner *ngIf="loading_calendar" margin-top></ion-spinner>
+				<nodata *ngIf="(calendar_slider == undefined || calendar_slider.length == 0) && !loading_calendar"></nodata>
+				<calendar [calendarSlider]="calendar_slider"></calendar>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
@@ -16,14 +23,16 @@
 	<ion-grid no-padding margin-top>
 		<ion-row no-padding>
 			<ion-col>
-				<news margin-top></news>
+				<ion-spinner *ngIf="loading_news" margin-top></ion-spinner>
+				<nodata *ngIf="(news_slider == undefined || news_slider.length == 0) && (news_body == undefined || news_body.length == 0) && !loading_news"></nodata>
+				<news [newsSlider]="news_slider" [newsBody]="news_body" margin-top></news>
 			</ion-col>
 		</ion-row>
 	</ion-grid>
 	<ion-grid margin-top>
 		<ion-row>
 			<ion-col text-center>
-				<button class="btn-cal">Todas as notícias</button>
+				<button class="btn-cal" (click)="goToNews()">Todas as notícias</button>
 			</ion-col>
 		</ion-row>
 	</ion-grid>

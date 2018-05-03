@@ -20,6 +20,17 @@ ion-app.md, ion-app.ios, ion-app.wp{
     font-family: 'Open Sans', sans-serif !important;
 }
 
+ion-header{
+    margin-top: 55px;
+}
+ion-navbar{
+    min-height: auto !important;
+}
+
+.margin-top-header{
+    margin-top: 50px;
+}
+
 //Tabs
 .tabs-md
 {
@@ -122,4 +133,23 @@ h1.title{
     .toast-wrapper{
         background-color: #00a2ba;
     }
+}
+
+
+ion-spinner {
+    display: block;
+    margin: auto;
+    color: #555;
+    circle{
+        stroke: #ccc !important;
+    }
+}
+
+img-loader{
+    background-size: cover !important;
+    background-position: center !important;
+}
+
+ion-refresher{
+    height: 200px;
 }
