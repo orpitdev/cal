@@ -12,6 +12,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { Network } from '@ionic-native/network';
 import { SQLite } from '@ionic-native/sqlite';
 
+
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
 import { HomePage } from '../pages/home/home';
@@ -21,6 +22,8 @@ import { NewsPage } from '../pages/news/news';
 import { NewsDetailPage } from './../pages/news-detail/news-detail';
 import { PlayersPage } from './../pages/players/players';
 import { AboutPage } from './../pages/about/about';
+import { AlivePage } from '../pages/alive/alive';
+
 
 import { ActionsComponent } from './../components/actions/actions';
 import { NewsComponent } from './../components/news/news';
@@ -37,10 +40,10 @@ import { PlayersProvider } from '../providers/players/players';
 import { ResultProvider } from '../providers/result/result';
 import { DivisionProvider } from '../providers/division/division';
 import { CategoryclubProvider } from '../providers/categoryclub/categoryclub';
+import { AliveProvider } from '../providers/alive/alive';
 
 
 import localePt from '@angular/common/locales/pt';
-import { AliveProvider } from '../providers/alive/alive';
 registerLocaleData(localePt, 'pt');
 
 
@@ -55,6 +58,7 @@ registerLocaleData(localePt, 'pt');
         NewsDetailPage,
         PlayersPage,
         AboutPage,
+        AlivePage,
         NewsComponent,
         ActionsComponent,
         CalendarComponent,
@@ -76,7 +80,8 @@ registerLocaleData(localePt, 'pt');
         NewsPage,
         NewsDetailPage,
         PlayersPage,
-        AboutPage
+        AboutPage,
+        AlivePage
     ],
     providers: [
         StatusBar,
@@ -98,8 +103,8 @@ registerLocaleData(localePt, 'pt');
         ResultProvider,
         ResultProvider,
         PlayersProvider,
-    CategoryclubProvider,
-    AliveProvider,
+        CategoryclubProvider,
+        AliveProvider,
     ]
 })
 export class AppModule {}

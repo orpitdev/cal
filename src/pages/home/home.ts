@@ -1,3 +1,4 @@
+import { AlivePage } from './../alive/alive';
 import { AliveProvider } from './../../providers/alive/alive';
 import { ToastProvider } from './../../providers/toast/toast';
 import { PlayersProvider } from './../../providers/players/players';
@@ -24,6 +25,10 @@ export class HomePage {
 	public loading_calendar: boolean = true;
 
 	public update;
+	public loop;
+
+	public hasgame: boolean = false
+	public idgame: string
 
 	@ViewChild('myTabs') tabs: Tabs;
 
@@ -127,18 +132,22 @@ export class HomePage {
 
 	checkAlive()
 	{
-		let loop: any;
-
 		if(window.localStorage.getItem('network_status') == '1')
 		{
-			loop = setInterval(() => {
+				this.loop = setInterval(() => {
 				this.aliveProvider.check()
 				.then((data: any) => {
 					if(data)
 					{
 						if(data.hasgame == '1')
 						{
-							console.log('oi');
+							this.hasgame = true;
+							this.idgame = data.id;
+						}
+						else
+						{
+							this.hasgame = false;
+							this.idgame = '';
 						}
 					}
 				})
@@ -146,9 +155,22 @@ export class HomePage {
 		}
 		else
 		{
-			if(loop){
-				clearInterval(loop)
+			if(this.loop){
+				clearInterval(this.loop)
 			}
 		}
+	}
+
+	ionViewWillLeave(){
+		if(this.loop)
+		{
+			clearInterval(this.loop)
+		}
+	}
+
+
+	goToAlive(){
+		let idgame = this.idgame;
+		this.navCtrl.push(AlivePage, {idgame})
 	}
 }

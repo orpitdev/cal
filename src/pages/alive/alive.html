@@ -1,0 +1,24 @@
+<!--
+  Generated template for the AlivePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content no-padding class="margin-top-header">
+    <ion-spinner *ngIf="loading" margin-top></ion-spinner>
+
+    <ion-grid no-padding *ngIf="!loading">
+      <ion-row no-padding>
+        <ion-col>
+          <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(linkMinute)" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+
+</ion-content>
