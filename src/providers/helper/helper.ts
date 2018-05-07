@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FileTransfer, FileTransferObject } from '@ionic-native/file-transfer';
 import { File } from '@ionic-native/file';
+import { normalizeURL } from 'ionic-angular'
 
 
 /*
@@ -24,13 +25,13 @@ export class HelperProvider {
         fileTransfer.download(source, this.file.dataDirectory + sector + '/' + file_name)
         .then((entry) => {
           //Retorna o path do local da imagem
-          resolve(entry.nativeURL);
+          resolve(normalizeURL(entry.toURL()));
         }, () => {
           //Se houver erro, retorna "resolvida", mas retorna "no_image" para o download
           fileTransfer.download(no_image, this.file.dataDirectory + sector + '/' + 'no_img.jpg')
           .then((entry) => {
             //Retorna o path do local da imagem
-            resolve(entry.nativeURL);
+            resolve(normalizeURL(entry.toURL()));
           }, () => {
             resolve(false);
           })
@@ -42,7 +43,7 @@ export class HelperProvider {
         fileTransfer.download(no_image, this.file.dataDirectory + sector + '/' + 'no_img.jpg')
           .then((entry) => {
             //Retorna o path do local da imagem
-            resolve(entry.nativeURL);
+            resolve(normalizeURL(entry.toURL()));
           }, () => {
             resolve(false);
           })

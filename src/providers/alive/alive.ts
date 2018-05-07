@@ -1,4 +1,3 @@
-import { DatabaseProvider } from './../database/database';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -13,7 +12,7 @@ export class AliveProvider {
 
   private API: string = 'http://calinense.com.br/api/v1'
 
-  constructor(public http: HttpClient, private dbProvider: DatabaseProvider) {}
+  constructor(public http: HttpClient) {}
 
   check(){
     const hasgame = new Promise((resolve, reject) => {
