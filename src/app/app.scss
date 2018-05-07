@@ -43,6 +43,8 @@ ion-navbar{
         background-repeat: repeat-x;
         background-size: cover;
         background-color: transparent;
+        -webkit-justify-content: left;
+        justify-content: left;
         
         &.show-tabbar
         {
