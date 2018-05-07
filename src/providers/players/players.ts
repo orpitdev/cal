@@ -14,14 +14,11 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class PlayersProvider {
 
-  private db: any
   private API: string = 'http://calinense.com.br/api/v1'
   private source_path: string = 'http://calinense.com.br/public/cms/upload/casts/'
   private sector: string = 'casts'
 
-  constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {
-    this.db = this.dbProvider.getDB();
-  }
+  constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {}
 
   public populate(){
     
@@ -32,7 +29,7 @@ export class PlayersProvider {
         .toPromise()
         .then((result: any) => {
           if(window.localStorage.getItem('forceUpdate') == '1'){
-            this.db
+            this.dbProvider.getDB()
                 .then((db: SQLiteObject) => {
                   db.executeSql("DELETE FROM player", {})
                 })
@@ -51,7 +48,7 @@ export class PlayersProvider {
 
               let image_player = image !== false ? image : '';
 
-              return this.db
+              return this.dbProvider.getDB()
                 .then((db: SQLiteObject) => {
                   return db.executeSql("INSERT INTO player (`id_player`, `id_category`, `name`, `nickname`, `picture`, `number`, `birth_date`, `position`, `position_initials`, `age`, `order`) VALUES ('"+result[i].id+"', '"+result[i].category_club+"', '"+result[i].name+"', '"+result[i].nickname+"', '"+image_player+"', '"+result[i].number+"', '"+result[i].birth_date+"', '"+result[i].description+"', '"+result[i].initials+"', "+result[i].age+", "+result[i].order+")", {})
                 })
@@ -89,7 +86,7 @@ export class PlayersProvider {
 
   public get(category){
     
-    return this.db
+    return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
 
       let sql = "SELECT * FROM `player` WHERE id_category = '"+category+"' ORDER BY `order` DESC"

@@ -14,14 +14,11 @@ import { ToastProvider } from './../toast/toast';
 @Injectable()
 export class NewsProvider {
 
-  private db: any
   private API: string = 'http://calinense.com.br/api/v1'
   private source_path: string = 'http://calinense.com.br/public/cms/upload/content/'
   private sector: string = 'news'
   
-  constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {
-    this.db = this.dbProvider.getDB();
-  }
+  constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {}
 
   public populate(page: number = 0){
     
@@ -32,7 +29,7 @@ export class NewsProvider {
         .toPromise()
         .then((result: any) => {
           if(window.localStorage.getItem('forceUpdate') == '1'){
-            this.db
+            this.dbProvider.getDB()
                 .then((db: SQLiteObject) => {
                   db.executeSql("DELETE FROM news", {})
                 })
@@ -50,14 +47,14 @@ export class NewsProvider {
               .then((image) => {
                 if(image === false) //Sem imagem - ou deu problemas no download para o device.
                 {
-                  return this.db
+                  return this.dbProvider.getDB()
                   .then((db: SQLiteObject) => {
                     return db.executeSql("INSERT INTO news (id_source, title, subtitle, author, content, image, image_name, date_time) VALUES ("+parseInt(result[i].cntnt_id)+", '"+result[i].cntnt_title+"', '"+result[i].cntnt_sub_title+"', '"+result[i].cntnt_font_author+"', '"+result[i].cntnt_text+"', 'no_img.jpg', '"+result[i].cntnt_image+"', '"+result[i].cntnt_date_content+"')", {})
                   })
                 }
                 else //Com imagem. Sucesso!
                 {
-                  return this.db
+                  return this.dbProvider.getDB()
                   .then((db: SQLiteObject) => {
                     return db.executeSql("INSERT INTO news (id_source, title, subtitle, author, content, image, image_name, date_time) VALUES ("+parseInt(result[i].cntnt_id)+", '"+result[i].cntnt_title+"', '"+result[i].cntnt_sub_title+"', '"+result[i].cntnt_font_author+"', '"+result[i].cntnt_text+"', '"+image+"', '"+result[i].cntnt_image+"', '"+result[i].cntnt_date_content+"')", {})
                   })
@@ -96,7 +93,7 @@ export class NewsProvider {
   }
 
   public get(page: number = 1){
-    return this.db
+    return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
 
       let sql = "SELECT * FROM news ORDER BY date(date_time) DESC LIMIT ?"
@@ -138,7 +135,7 @@ export class NewsProvider {
 
 
   public detail(id){
-    return this.db
+    return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
 
       let sql = "SELECT * FROM news WHERE id = ? LIMIT 1"

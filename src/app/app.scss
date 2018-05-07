@@ -32,7 +32,7 @@ ion-navbar{
 }
 
 //Tabs
-.tabs-md
+.tabs-md, .tabs-ios
 {
     .tabbar{
         top: 0;
@@ -109,27 +109,27 @@ h1.title{
 }
 
 //Toast
-.toast-md.danger{
+.toast-md.danger, .toast-ios.danger{
     .toast-wrapper{
         background-color: #de3241;
     }
 }
-.toast-md.success{
+.toast-md.success, .toast-ios.success{
     .toast-wrapper{
         background-color: #1da83f;
     }
 }
-.toast-md.warning{
+.toast-md.warning, .toast-ios.warning{
     .toast-wrapper{
         background-color: #ffc200;
     }
 }
-.toast-md.primary{
+.toast-md.primary, .toast-ios.primary{
     .toast-wrapper{
         background-color: #0077ff;
     }
 }
-.toast-md.info{
+.toast-md.info, .toast-ios.info{
     .toast-wrapper{
         background-color: #00a2ba;
     }

@@ -12,12 +12,9 @@ import { DatabaseProvider } from './../database/database';
 @Injectable()
 export class DivisionProvider {
 
-  private db: any
   private API: string = 'http://calinense.com.br/api/v1'
 
-  constructor(public http: HttpClient, private dbProvider: DatabaseProvider) {
-    this.db = this.dbProvider.getDB();
-  }
+  constructor(public http: HttpClient, private dbProvider: DatabaseProvider) {}
 
   public populate(page: number = 0){
     
@@ -30,7 +27,7 @@ export class DivisionProvider {
 
           var cont = 1;
 
-          this.db
+          this.dbProvider.getDB()
             .then((db: SQLiteObject) => {
               db.executeSql("DELETE FROM divisions", {})
               .then(() => {
@@ -40,7 +37,7 @@ export class DivisionProvider {
             .then(() => {
               for(let i in result)
               {
-                this.db
+                this.dbProvider.getDB()
                 .then((db) => {
                   return db.executeSql("INSERT INTO divisions (`id_divisions`, `description`) VALUES ('"+result[i].id+"', '"+result[i].description+"')", {})
                 })
@@ -75,7 +72,7 @@ export class DivisionProvider {
   }
 
   public get(){
-    return this.db
+    return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
 
       let sql = "SELECT * FROM divisions ORDER BY description ASC"

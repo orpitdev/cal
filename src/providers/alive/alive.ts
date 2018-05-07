@@ -11,12 +11,9 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class AliveProvider {
 
-  private db: any
   private API: string = 'http://calinense.com.br/api/v1'
 
-  constructor(public http: HttpClient, private dbProvider: DatabaseProvider) {
-    this.db = this.dbProvider.getDB();
-  }
+  constructor(public http: HttpClient, private dbProvider: DatabaseProvider) {}
 
   check(){
     const hasgame = new Promise((resolve, reject) => {

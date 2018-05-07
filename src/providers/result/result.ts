@@ -14,14 +14,11 @@ import { ToastProvider } from './../toast/toast';
 @Injectable()
 export class ResultProvider {
 
-  public db: any
   private API: string = 'http://calinense.com.br/api/v1'
   private source_path: string = 'http://calinense.com.br/public/cms/upload/club/'
   private sector: string = 'clubs'
 
-  constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {
-    this.db = this.dbProvider.getDB();
-  }
+  constructor(public http: HttpClient, private dbProvider: DatabaseProvider, private toastProvider: ToastProvider, private helperProvider: HelperProvider) {}
 
   public populate(){
     
@@ -32,7 +29,7 @@ export class ResultProvider {
         .toPromise()
         .then((result: any) => {
           if(window.localStorage.getItem('forceUpdate') == '1'){
-            this.db
+            this.dbProvider.getDB()
                 .then((db: SQLiteObject) => {
                   db.executeSql("DELETE FROM results", {})
                 })
@@ -54,7 +51,7 @@ export class ResultProvider {
               let logo_team_1 = logos[0] !== false ? logos[0] : '';
               let logo_team_2 = logos[1] !== false ? logos[1] : '';
 
-              return this.db
+              return this.dbProvider.getDB()
                 .then((db: SQLiteObject) => {
                   return db.executeSql("INSERT INTO results (`id_game`, `id_divisions`, `stadium_name`, `stadium_nickname`, `date_game`, `time_game`, `goal_t1`, `goal_t2`, `championships`, `team_t1_name`, `team_t1_initials`, `team_t1_logo`, `team_t2_name`, `team_t2_initials`, `team_t2_logo`, `day_week`, `month_name`, `time_simple`) VALUES ('"+result[i].id+"', '"+result[i].id_divisions+"', '"+result[i].name+"', '"+result[i].nickname+"', '"+result[i].data_game+"', '"+result[i].time_game+"', '"+result[i].goal_t1+"', '"+result[i].goal_t2+"', '"+result[i].description+"', '"+result[i].times[0].name+"', '"+result[i].times[0].initials+"', '"+logo_team_1+"', '"+result[i].times[1].name+"', '"+result[i].times[1].initials+"', '"+logo_team_2+"', '"+result[i].day_week+"', '"+result[i].month_name+"', '"+result[i].time_simple+"')", {})
                 })
@@ -92,7 +89,7 @@ export class ResultProvider {
 
   public get(championships){
     
-    return this.db
+    return this.dbProvider.getDB()
     .then((db: SQLiteObject) => {
 
       let sql = "SELECT * FROM results WHERE date(date_game) < date('now') AND id_divisions = '"+championships+"' ORDER BY date(date_game) DESC"
