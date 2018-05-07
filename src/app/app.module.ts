@@ -66,7 +66,11 @@ registerLocaleData(localePt, 'pt');
     ],
     imports: [
         BrowserModule,
-        IonicModule.forRoot(MyApp),
+        IonicModule.forRoot(MyApp, {
+            backButtonText: '',
+            backButtonIcon: 'ios-arrow-back',
+            iconMode: 'md'
+        }),
         IonicImageLoader.forRoot(),
         HttpClientModule,
     ],
