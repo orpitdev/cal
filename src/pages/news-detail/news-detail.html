@@ -38,7 +38,7 @@
       </ion-row>
       <ion-row margin-top>
         <ion-col text-right>
-          <small><ion-icon name="time"></ion-icon> {{news.date_time | date:'d/M/y H:m'}}</small>
+          <small><ion-icon name="time"></ion-icon> {{news.date_time | moment:'DD/MM/YYYY HH:mm'}}</small>
         </ion-col>
       </ion-row>
       <ion-row *ngIf="news.image_name.length >= 5">

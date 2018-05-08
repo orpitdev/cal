@@ -12,6 +12,8 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { Network } from '@ionic-native/network';
 import { SQLite } from '@ionic-native/sqlite';
 
+import { MomentPipe } from './../pipes/moment/moment';
+
 
 import { MyApp } from './app.component';
 import { TabsPage } from '../pages/tabs/tabs';
@@ -62,14 +64,13 @@ registerLocaleData(localePt, 'pt');
         NewsComponent,
         ActionsComponent,
         CalendarComponent,
-        NodataComponent
+        NodataComponent,
+        MomentPipe
     ],
     imports: [
         BrowserModule,
         IonicModule.forRoot(MyApp, {
-            backButtonText: '',
-            backButtonIcon: 'ios-arrow-back',
-            iconMode: 'md'
+            backButtonText: 'Voltar',
         }),
         IonicImageLoader.forRoot(),
         HttpClientModule,
