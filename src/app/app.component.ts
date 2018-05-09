@@ -41,6 +41,10 @@ export class MyApp {
       statusBar.styleDefault();
       this.checkNetwork();
 
+      if(platform.is('android')) {
+        statusBar.backgroundColorByHexString('#b4000b');
+      }
+
       //Create database
       dbProvider.createDatabase()
       .then(() => {
